@@ -54,9 +54,9 @@
     max-width:90%;
     object-fit: cover;
 }
-.caption{
-    text-align: left;
-    width:60vw;
+.caption1{
+    text-align: center ;
+    width:60vw ;
     padding-left: 1vw;
     padding-top: 2px;
     font-family: 'sans-serif';

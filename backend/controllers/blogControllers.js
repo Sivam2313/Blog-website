@@ -4,12 +4,15 @@ const Blog = require('../model/blogSchema');
 
 const fetchBlog = asyncHandler(async(req,res)=>{
     const{userId} = req.body;
+    var blogs
     if(!userId){
-        return;
+        blogs = await Blog.find();
     }
-    const blogs = await Blog.find({created:userId});
+    else{
+        blogs = await Blog.find({created:userId});
+    }
     if(blogs){
-        res.status(201).json(blogs);
+        res.status(201).json(blogs.reverse());
     }
     else{
         throw new Error ('error')
@@ -17,12 +20,15 @@ const fetchBlog = asyncHandler(async(req,res)=>{
 })
 const createBlog = asyncHandler(async(req,res)=>{
     const {heading,content,caption,created} = req.body;
-    
+    const tags = [{
+        tagName:'Tag1'
+    }]
     const blog = await Blog.create({
         heading,
         content,
         caption,
         created,
+        tags,
     })
     if(blog){
         res.status(201).json(blog);

@@ -18,6 +18,11 @@ const blogSchema = mongoose.Schema({
         type:String,
         required:true,
     },
+    tags:[{
+        tagName:{
+            type:String
+        }
+    }]
 },{
     timestamp:true,
 })

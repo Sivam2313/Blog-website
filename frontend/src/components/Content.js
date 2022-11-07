@@ -1,10 +1,15 @@
 import React from 'react'
 import './style/content.css';
 import imgg from '../assets/scblog.png';
-const Content = ({viewBlog}) => {
+import { useHistory } from 'react-router-dom';
+const Content = ({viewBlog,setViewBlog}) => {
+    const history = useHistory();
+    const backHandler = ()=>{
+        setViewBlog("");
+    }
   return (
     <div className='blog-viewer'>
-        <div className='backbtn btn'>
+        <div className='backbtn btn' onClick={backHandler}>
             <i class='fas fa-arrow-right'></i>
         </div>
         <div className='top btn'>
@@ -16,7 +21,7 @@ const Content = ({viewBlog}) => {
         <div className='viewer-img'>
             <img className='imgBlog' src={imgg}></img>
         </div>
-        <div className='caption'>
+        <div className='caption1'>
             {viewBlog.caption}
         </div>
         <div className='viewer-content'>

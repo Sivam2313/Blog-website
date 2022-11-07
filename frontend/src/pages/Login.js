@@ -1,30 +1,75 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script';
 import imgLogin from '../assets/loginImage.jpg';
+import axios from 'axios';
 import './style/login.css';
+import { useHistory } from 'react-router-dom';
 
 const Login = () => {
 
-
+    const [password, setPassword] = useState();
+    const [email, setEmail] = useState();
+    const [constant, setConstant] = useState();
     const clientId = '582024406527-hpg0uhvrd0c8jp5nj6rfvl23np1ri0l9.apps.googleusercontent.com'
-
+    const history = useHistory();
     useEffect(() => {
-        const initClient = () => {
-            gapi.client.init({
-                clientId: clientId,
-                scope: ''
-            });
+            const initClient = () => {
+                    gapi.client.init({
+                            clientId: clientId,
+                            scope: ''
+                        });
         };
         gapi.load('client:auth2', initClient);
-    });
-
-    const onSuccess = (res) => {
-        console.log('success:', res);
+    },[constant]);
+    
+    const submitHandler = async ()=>{
+        console.log("Email is ",email);
+        try{
+            const {data} = await axios.post(
+                '/user/login',
+                JSON.stringify({ email, password:password }),
+                {
+                    headers: { "Content-Type": "application/json" },
+                    withCredentials: true,
+                }
+            );
+            
+            // const {data} = await axios.post('/user/login',JSON.stringify({email,password}),config);
+            localStorage.setItem('isAuth',true);
+            localStorage.setItem('user',JSON.stringify(data));
+            history.push('/');
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+    const onSuccess = async (res) => {
+        
+        setEmail(res.wt.cu);
+        try{
+            const {data} = await axios.post(
+                '/user/loginByGoogle',
+                JSON.stringify({ email }),
+                {
+                    headers: { "Content-Type": "application/json" },
+                    withCredentials: true,
+                }
+            );
+            console.log("email is",email);
+            // const {data} = await axios.post('/user/loginByGoogle',{email:email},config);
+                localStorage.setItem('isAuth',true);
+                localStorage.setItem('user',JSON.stringify(data));
+                history.push('/');
+        }
+        catch(error){
+            console.log(error);
+        }
     };
     const onFailure = (err) => {
         console.log('failed:', err);
     };
+
 
   return (
     <div className='login-content'>
@@ -33,7 +78,7 @@ const Login = () => {
                 Blog
             </p>
             <div className='links'>
-                <div className='links nav-links'>
+                <div className='links nav-links' onClick={()=>{history.push('/')}}>
                     Explore
                 </div>
                 <div className='links nav-links'>
@@ -51,11 +96,11 @@ const Login = () => {
                 Login
             </div>
             <div className='input'>
-                <input placeholder='Email' type='text' />
-                <input placeholder='Password' type='password' />
+                <input placeholder='Email' type='text' onChange={(e)=>{setEmail(e.target.value)}} />
+                <input placeholder='Password' type='password' onChange={(e)=>{setPassword(e.target.value)}}/>
             </div>
             <div className='buttons'>
-                <button className='login-btn btn'>
+                <button className='login-btn btn' onClick={submitHandler}>
                     Login
                 </button>
                 <button className='signup-btn btn'>
@@ -73,7 +118,7 @@ const Login = () => {
                 />
             </div>
         </div>
-        <div className='img'>
+        <div className='img1'>
             <img src = {imgLogin} className='image'></img>
         </div>
     </div>

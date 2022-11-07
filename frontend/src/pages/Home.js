@@ -1,45 +1,56 @@
-import React, { useState } from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom';
 import Content from '../components/Content';
 import ShowBlogs from '../components/ShowBlogs';
 import './style/home.css';
 const Home = () => {
-    const [viewBlog, setViewBlog] = useState({
-        heading:'Heading1',
-        content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur nec finibus lectus. Etiam a metus nibh. Vivamus rhoncus nisi dui, id pellentesque velit euismod eu. Phasellus volutpat eget diam eget laoreet. Aenean tristique malesuada odio, vitae cursus enim semper eu. Aenean bibendum turpis nisl, eget aliquam sem aliquam vitae. Nunc a arcu non nulla commodo facilisis. Duis porttitor ac leo sed scelerisque. Vestibulum eu felis sit amet orci pretium ullamcorper. In mollis, ligula sed lacinia viverra, felis libero porta enim, mattis dictum lectus odio ut lorem. Curabitur eu augue a diam ornare efficitur. Sed blandit interdum sapien, vel viverra nisi maximus vel. In tempor malesuada turpis, sed rhoncus dolor lobortis accumsan. Vivamus pellentesque semper sapien non tempus. Aliquam vitae risus non urna malesuada cursus eget nec lorem. Vestibulum bibendum at libero ac tempor. ',
-        tags:['jff','entertainment'],
-        created:'xyz',
-        caption:'Some Caption',
-    });
-    const [blogs, setBlogs] = useState([{
-        heading:'Heading1',
-        content:'dfhgh dsghsf hsdgjskf kasghdsjk hsaghsgfk',
-        tags:['jff','entertainment'],
-        created:'xyz'
-    },
-    {
-        heading:'Heading2',
-        content:'dfhgh dsghsf hsdgjskf kasghdsjk hsaghsgfk',
-        tags:['entertainment'],
-        created:'xyz123'
-    },
-    {
-        heading:'Heading2',
-        content:'dfhgh dsghsf hsdgjskf kasghdsjk hsaghsgfk',
-        tags:['entertainment'],
-        created:'xyz123'
-    },
-    {
-        heading:'Heading2',
-        content:'dfhgh dsghsf hsdgjskf kasghdsjk hsaghsgfk',
-        tags:['entertainment'],
-        created:'xyz123'
-    },
-    {
-        heading:'Heading2',
-        content:'dfhgh dsghsf hsdgjskf kasghdsjk hsaghsgfk',
-        tags:['entertainment'],
-        created:'xyz123'
-    }]);
+    const history = useHistory();
+    const [viewBlog, setViewBlog] = useState("");
+    const [blogs, setBlogs] = useState([]);
+    const [user, setUser] = useState(false);
+    useEffect(() => {
+        async function fetch(){
+            try{
+                const {data} = await axios.get(
+                    '/blogs/fetch',
+                    {
+                        headers: { "Content-Type": "application/json" },
+                        withCredentials: true,
+                    }
+                );
+                console.log(data);
+                const arr = [...data];
+                setBlogs(arr);
+
+            }
+            catch(error){
+                console.log(error);
+            }   
+        }
+        if(JSON.parse(localStorage.getItem('isAuth'))){
+            const us = JSON.parse(localStorage.getItem('user'));
+            setUser(us);
+        }
+        else{
+            localStorage.setItem('isAuth',false);
+            localStorage.setItem('user',false);
+        }
+      fetch();
+    }, [])
+
+    const loginHandler  = ()=>{
+        console.log(JSON.parse(localStorage.getItem('isAuth')));
+        if(JSON.parse(localStorage.getItem('isAuth'))){
+            localStorage.setItem('user',false);
+            localStorage.setItem('isAuth',false);
+            history.push('/login');
+        }
+        else{
+            history.push('/login')
+        }
+    }
+    
   return (
     <div>
         <div className='navbar'>
@@ -50,17 +61,21 @@ const Home = () => {
                 <div className='links nav-links'>
                     Explore
                 </div>
-                <div className='links nav-links'>
+                <div className='links nav-links' onClick={()=>{history.push('/create')}}>
                     Create
                 </div>
                 <div className='links'>
-                    <button className='login'>
-                        Login
+                    <button className='login' onClick={loginHandler}>
+                        {
+                            (user.email)?'Logout':'Login'
+                        }
                     </button>
                 </div>
             </div>
         </div>
-        {(viewBlog==="")?<ShowBlogs blogs={blogs} setViewBlog={setViewBlog}/>:<Content viewBlog={viewBlog}/>}
+        <div className='main-content'>
+            {(viewBlog==="")?<ShowBlogs blogs={blogs} setViewBlog={setViewBlog} user={user}/>:<Content viewBlog={viewBlog} setViewBlog={setViewBlog}/>}
+        </div>
     </div>
   )
 }

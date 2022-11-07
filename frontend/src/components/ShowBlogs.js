@@ -1,13 +1,15 @@
 import React from 'react'
 
 const ShowBlogs = ({blogs,setViewBlog}) => {
-    console.log(blogs.blogs)
+    function clickHandler(idx){
+        setViewBlog(blogs[idx])
+    }
   return (
     <div className='content'>
         {
             blogs.map((item,idx)=>{
                 return(
-                    <div key={idx} className='blog-content'>
+                    <div key={idx} className='blog-content' onClick={()=>{clickHandler(idx)}}>
                         <div className='img'>
                         </div>
                         <div className='tags'>
@@ -15,7 +17,7 @@ const ShowBlogs = ({blogs,setViewBlog}) => {
                                 item.tags.map((tg,idx)=>{
                                     return(
                                         <span key={idx} className='tag'>
-                                            {tg}
+                                            {tg.tagName}
                                         </span>
                                     )
                                 })

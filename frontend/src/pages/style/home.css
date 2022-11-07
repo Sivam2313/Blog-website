@@ -47,15 +47,20 @@
 .login:hover{
     background-color: #776d62;
 }
-.content{
+.main-content{
     display: flex;
     justify-content: center;
+}
+.content{
+    margin-top: 8vh;
+    display: flex;
+    justify-content: flex-start;
     flex-wrap: wrap;
     width:100vw;
     min-height:92vh;
     height:fit-content;
     padding-top: 8vh;
-    padding-left:vw;
+    padding-left:3vw;
     background-color: #d9d9d9;
 
 }
@@ -63,7 +68,7 @@
     display: flex;
     flex-flow: column;
     align-items: center;
-    width:20w;
+    width:20vw;
     height:45vh;
     background-color: #ffffff;
     color: #252422;
@@ -107,6 +112,9 @@
     font-weight: 500;
     margin-top: 0.5vh;
     font-family: 'Roboto Mono';
+}
+.blog-main{
+    width:20vw;
 }
 .blog-desc{
     text-align: left;
