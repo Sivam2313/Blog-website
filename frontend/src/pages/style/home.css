@@ -1,0 +1,126 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height:9vh;
+    width:100vw;
+    background-color: #252422;
+    color:#ffffff;
+    position: fixed;
+    top:0px;
+    left:0px;
+}
+.brand{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    padding-left: 8vw;
+    font-family: 'Montserrat';
+}
+.links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:34vw;
+}
+.nav-links{
+    font-size: 1.1rem;
+    font-family: 'Montserrat';
+    transition: all 200ms;
+    height:9vh;
+}
+.nav-links:hover{
+    color:#af3520;
+}
+.login{
+    height:5vh;
+    width: 9vw;
+    border-radius: 50px;
+    border: none;
+    font-size: 1.1rem;
+    font-family: 'Montserrat';
+    color:#ffffff;
+    background-color: #453F39;
+    transition: all 200ms;
+}
+.login:hover{
+    background-color: #776d62;
+}
+.content{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width:100vw;
+    min-height:92vh;
+    height:fit-content;
+    padding-top: 8vh;
+    padding-left:vw;
+    background-color: #d9d9d9;
+
+}
+.blog-content{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    width:20w;
+    height:45vh;
+    background-color: #ffffff;
+    color: #252422;
+    margin-right: 2vw;
+    border-radius: 5px;
+    margin-bottom: 2vh;
+    min-width: 300px;
+}
+.img{
+    width:100%;
+    height:65%;
+    background-color: #af3520;
+    border-radius: 5px 5px 0px 0px;
+}
+.tags{
+    display: flex;
+    justify-content: flex-start;
+    width:100%;
+    height:3vh;
+    padding-left: 2vw;
+    padding-top: 1vh;
+}
+.tag{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    width: fit-content;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    margin:2px;
+    border: 1px solid cyan;
+    color:cyan;
+    font-family: 'Montserrat';
+}
+.blog-heading{
+    text-align: left;
+    font-size:2rem;
+    padding-left:1vw;
+    font-family: sans-serif;
+    font-weight: 500;
+    margin-top: 0.5vh;
+    font-family: 'Roboto Mono';
+}
+.blog-desc{
+    text-align: left;
+    color: #494545;
+    width: 80%;
+    height:3vh;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-left: 1vw;
+}
+.blog-footer{
+    text-align: right;
+    width:100%;
+    color:#6e5c5c;
+    margin-right: 2vw;
+}
