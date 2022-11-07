@@ -68,7 +68,9 @@ const Create = () => {
                 </div>
                 <div className='links'>
                     <button className='login' onClick={loginHandler}>
-                        Login
+                        {
+                            (JSON.parse(localStorage.getItem('isAuth')))?'Logout':'Login'
+                        }
                     </button>
                 </div>
             </div>

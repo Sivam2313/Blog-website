@@ -9,19 +9,34 @@ const Home = () => {
     const [viewBlog, setViewBlog] = useState("");
     const [blogs, setBlogs] = useState([]);
     const [user, setUser] = useState(false);
+    const [userBlog, setUserBlog] = useState([]);
+    const [show, setshow] = useState()
     useEffect(() => {
         async function fetch(){
             try{
-                const {data} = await axios.get(
+                var {data} = await axios.get(
                     '/blogs/fetch',
                     {
                         headers: { "Content-Type": "application/json" },
                         withCredentials: true,
                     }
                 );
-                console.log(data);
-                const arr = [...data];
+                // console.log(data);
+                var arr = [...data];
                 setBlogs(arr);
+                if(user.email){
+                    
+                    var {data} = await axios.get(
+                        '/blogs/fetch',
+                        JSON.stringify({userId:user.email}),
+                        {
+                            headers: { "Content-Type": "application/json" },
+                            withCredentials: true,
+                        }
+                        );
+                        var arr = [...data];
+                        setUserBlog(arr);
+                }
 
             }
             catch(error){
