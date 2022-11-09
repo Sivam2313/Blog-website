@@ -1,8 +1,11 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom';
 
 const ShowBlogs = ({blogs,setViewBlog}) => {
+    const history = useHistory();
     function clickHandler(idx){
-        setViewBlog(blogs[idx])
+        const path = '/:' + blogs[idx]._id;
+        history.push(path);
     }
   return (
     <div className='content'>

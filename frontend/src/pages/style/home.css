@@ -23,6 +23,7 @@
     justify-content: center;
     align-items: center;
     width:34vw;
+    cursor: pointer;
 }
 .nav-links{
     font-size: 1.1rem;
@@ -117,6 +118,9 @@
     font-weight: 500;
     margin-top: 0.5vh;
     font-family: 'Roboto Mono';
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .blog-main{
     width:20vw;

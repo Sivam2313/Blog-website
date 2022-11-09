@@ -35,6 +35,20 @@
     justify-content: center;
     align-items: center;
 }
+.like{
+    position: fixed;
+    right:5vw;
+    background-color: #262626;
+    height:10vw;
+    width:10vw;
+    max-width: 60px;
+    max-height: 60px;
+    border-radius: 50%;
+    bottom:5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .viewer-heading{
     font-family: 'Xanh Mono';
     font-size: 8vmin;
@@ -80,6 +94,11 @@
     font-size: 3vmin;
 }
 .backbtn i{
+    font-size: 1rem;
+    color:#ffffff;
+    font-size: 3vmin;
+}
+.like i{
     font-size: 1rem;
     color:#ffffff;
     font-size: 3vmin;

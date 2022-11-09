@@ -70,6 +70,7 @@ const Create = () => {
             }).then((res)=> res.json())
             .then(data =>{
                 setImg(data.url.toString());
+                console.log(data.url.toString());
             })
             .catch((err)=>{
                 console.log(err);
@@ -86,10 +87,10 @@ const Create = () => {
                 Blog
             </p>
             <div className='links'>
-                <div className='links nav-links'>
+                <div className='links nav-links' onClick={()=>{history.push('/explore')}}>
                     Explore
                 </div>
-                <div className='links nav-links'>
+                <div className='links nav-links' onClick={()=>{history.push('/create')}}>
                     Create
                 </div>
                 <div className='links'>

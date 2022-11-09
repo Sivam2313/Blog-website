@@ -26,7 +26,12 @@ const blogSchema = mongoose.Schema({
     img:{
         type:String,
         default: 'https://res.cloudinary.com/dazdnege9/image/upload/v1667969202/gapk1hmukwjqouehr5pf.png',
-    }
+    },
+    likes:[{
+        user:{
+            type:String,
+        }
+    }]
 },{
     timestamp:true,
 })

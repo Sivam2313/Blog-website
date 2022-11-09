@@ -2,17 +2,19 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import ShowBlogs from '../components/ShowBlogs';
-import './style/home.css';
-const Home = () => {
-    const history = useHistory();
-    const [viewBlog, setViewBlog] = useState("");
+
+const Explore = () => {
     const [blogs, setBlogs] = useState([]);
+    const [viewBlog, setViewBlog] = useState("");
     const [user, setUser] = useState(false);
+    const history = useHistory();
     useEffect(() => {
         async function fetch(){
+            const user = JSON.parse(localStorage.getItem('user'))
             try{
-                var {data} = await axios.get(
-                    '/blogs/fetch',
+                var {data} = await axios.post(
+                    '/blogs/fetchUser',
+                    JSON.stringify({ userId:user.email }),
                     {
                         headers: { "Content-Type": "application/json" },
                         withCredentials: true,
@@ -20,6 +22,7 @@ const Home = () => {
                 );
                 // console.log(data);
                 var arr = [...data];
+                console.log(arr);
                 setBlogs(arr);  
 
             }
@@ -37,7 +40,6 @@ const Home = () => {
         }
       fetch();
     }, [])
-
     const loginHandler  = ()=>{
         console.log(JSON.parse(localStorage.getItem('isAuth')));
         if(JSON.parse(localStorage.getItem('isAuth'))){
@@ -49,7 +51,6 @@ const Home = () => {
             history.push('/login')
         }
     }
-    
   return (
     <div>
         <div className='navbar'>
@@ -57,7 +58,7 @@ const Home = () => {
                 Blog
             </p>
             <div className='links'>
-                <div className='links nav-links' onClick={()=>history.push('/explore')}>
+                <div className='links nav-links'>
                     Explore
                 </div>
                 <div className='links nav-links' onClick={()=>{history.push('/create')}}>
@@ -65,9 +66,7 @@ const Home = () => {
                 </div>
                 <div className='links'>
                     <button className='login' onClick={loginHandler}>
-                        {
-                            (user.email)?'Logout':'Login'
-                        }
+                        Logout
                     </button>
                 </div>
             </div>
@@ -79,4 +78,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Explore
