@@ -24,6 +24,7 @@
 .caption{
     display: flex;
     width:50vw;
+    flex-flow: column;
     justify-content: flex-start;
     margin-bottom: 4vh;
 }
@@ -53,6 +54,7 @@
     padding-left:1vw;
     border: 1px solid #d9d9d9;
     border-radius: 8px;
+    margin-top: 2vh;
 
 }   
 .area{

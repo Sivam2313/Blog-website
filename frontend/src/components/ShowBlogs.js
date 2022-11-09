@@ -11,6 +11,7 @@ const ShowBlogs = ({blogs,setViewBlog}) => {
                 return(
                     <div key={idx} className='blog-content' onClick={()=>{clickHandler(idx)}}>
                         <div className='img'>
+                            <img src={item.img} className='cover-img'></img>
                         </div>
                         <div className='tags'>
                             {

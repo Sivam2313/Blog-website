@@ -19,7 +19,7 @@ const fetchBlog = asyncHandler(async(req,res)=>{
     }
 })
 const createBlog = asyncHandler(async(req,res)=>{
-    const {heading,content,caption,created} = req.body;
+    const {heading,content,caption,created,img} = req.body;
     const tags = [{
         tagName:'Tag1'
     }]
@@ -29,6 +29,7 @@ const createBlog = asyncHandler(async(req,res)=>{
         caption,
         created,
         tags,
+        img,
     })
     if(blog){
         res.status(201).json(blog);

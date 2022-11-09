@@ -19,7 +19,7 @@ const Content = ({viewBlog,setViewBlog}) => {
             {viewBlog.heading}
         </div>
         <div className='viewer-img'>
-            <img className='imgBlog' src={imgg}></img>
+            <img className='imgBlog' src={viewBlog.img}></img>
         </div>
         <div className='caption1'>
             {viewBlog.caption}

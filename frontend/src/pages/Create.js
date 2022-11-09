@@ -39,9 +39,10 @@ const Create = () => {
         const created = user.email;
         console.log(user);
         try{
+
             const {data} = await axios.post(
                 '/blogs/create',
-                JSON.stringify({ heading,content,caption,created}),
+                JSON.stringify({ heading,content,caption,created,img}),
                 {
                     headers: { "Content-Type": "application/json" },
                     withCredentials: true,
@@ -51,6 +52,31 @@ const Create = () => {
         }
         catch(error){
             console.log(error);
+        }
+    }
+    const postDetails = (pic)=>{
+        if(pic === undefined){
+            console.log('error');
+        }
+        if(pic.type==='image/png' || pic.type === 'image/jpeg'){
+            const data = new FormData();
+            data.append("file", pic);
+            data.append("upload_preset","blog-app")
+            data.append("cloud_name","dazdnege9");
+            console.log("uploading...");
+            fetch('https://api.cloudinary.com/v1_1/dazdnege9/image/upload',{
+                method:'post',
+                body:data,
+            }).then((res)=> res.json())
+            .then(data =>{
+                setImg(data.url.toString());
+            })
+            .catch((err)=>{
+                console.log(err);
+            })
+        }
+        else{
+            console.log("not supported");
         }
     }
   return (
@@ -80,9 +106,7 @@ const Create = () => {
                 <input type='text' placeholder='Title of The Blog...' onChange={(e)=>{setHeading(e.target.value)}}></input>
             </div>
             <div className='caption'>
-                <div className='btn1 imgSelect'>
-                    Cover Image
-                </div>
+                <input type='file' accept='image/*' onChange={(e)=> postDetails(e.target.files[0])}></input>
                 <input className='caption-input' type='text' placeholder='Caption of The Pic...' onChange={(e)=>{setCaption(e.target.value)}} />
             </div>
             <div className='area' >
