@@ -9,7 +9,7 @@ const Content = () => {
         history.push('/');
     }
     const [blog, setBlog] = useState({});
-    const [likeShow, setLikeShow] = useState(false);
+    const [likeColor, setLikeColor] = useState('#ffffff');
     const {id} = useParams();
     const user = JSON.parse(localStorage.getItem('user'));
     useEffect(() => {
@@ -23,19 +23,12 @@ const Content = () => {
                         withCredentials: true,
                     }
                 );
-                // console.log(data);
-                // console.log(data);
-                setBlog(data); 
-                if(user){
-                    const arr = data.like.find((item)=>{return user.email===item});
-                    console.log(arr);
-                    if(arr===user.email){
-                        setLikeShow(true);
+                setBlog(data);
+                if(data.likes.length!=0){
+                    if(data.likes.filter((item)=>{return item.user==user.email}).length!=0){
+                        setLikeColor('cyan');
                     }
-                    else{
-                        setLikeShow(false);
-                    }
-                }
+                } 
 
             }
             catch(error){
@@ -44,10 +37,38 @@ const Content = () => {
         }
         fetch();
     }, [])
+
     
-    const likeHandler = ()=>{
-        if(blog.like.find((item)=>{return item==user.email})){
-            const arr  = [...blog.like];
+    
+    
+    const likeHandler = async ()=>{
+        const email = user.email;
+        try{
+            var {data} = await axios.post(
+                    '/blogs/like',
+                    JSON.stringify({ email,blogId:id.substring(1) }),
+                    {
+                        headers: { "Content-Type": "application/json" },
+                        withCredentials: true,
+                    }
+                );
+
+            setBlog(data);
+            if(data.likes.length!=0){
+                if(data.likes.filter((item)=>{return item.user===user.email}).length!=0){
+                    setLikeColor('cyan');
+                }
+                else{
+                    setLikeColor('#ffffff');
+                }
+            }
+            else{
+                setLikeColor('#ffffff');
+            }
+            window.location.reload(false);
+        }
+        catch(error){
+            console.log(error);
         }
     }
 
@@ -61,10 +82,11 @@ const Content = () => {
             <i class='fas fa-angle-up'></i>
         </div>
         <div className='like btn' style={{
-            display:(user)?'flex':'none',
-            color:(likeShow)? 'cyan':'ffffff',
+            display:(user&&(id[0]==':'))?'flex':'none'
         }} onClick={likeHandler}>
-            <i class='fas fa-thumbs-up'></i>
+            <i class='fas fa-thumbs-up' style={{
+                color:(likeColor==='cyan')? '#e02957':'#ffffff',
+            }}></i>
         </div>
         <div className='viewer-heading'>
             {blog.heading}

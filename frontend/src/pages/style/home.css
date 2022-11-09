@@ -17,6 +17,7 @@
     font-size: 3rem;
     padding-left: 8vw;
     font-family: 'Montserrat';
+    cursor: pointer;
 }
 .links{
     display: flex;
@@ -63,7 +64,6 @@
     padding-top: 8vh;
     padding-left:3vw;
     background-color: #d9d9d9;
-
 }
 .blog-content{
     display: flex;
@@ -109,6 +109,23 @@
     border: 1px solid cyan;
     color:cyan;
     font-family: 'Montserrat';
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width:100%;
+    padding-right:2vw;
+}
+.likes{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width:50%;
+}
+.like-icon{
+    color:#e02957;
+    padding-right: 1vw;
 }
 .blog-heading{
     text-align: left;

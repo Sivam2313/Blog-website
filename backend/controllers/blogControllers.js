@@ -53,6 +53,9 @@ const fetchUserBlogs = asyncHandler(async(req,res)=>{
 })
 const fetchABlog = asyncHandler(async(req,res)=>{
     const {blogId} = req.body;
+    if(blogId==='xplore'){
+        return;
+    }
     if(!blogId){
         res.status(404);
     }
@@ -64,5 +67,37 @@ const fetchABlog = asyncHandler(async(req,res)=>{
         throw new Error ('error')
     }
 })
+const likeBlog = asyncHandler(async(req,res)=>{
+    const {email,blogId} = req.body;
+    const blog = await Blog.findOne({_id:blogId});
+    if(blog){
+        if(blog.likes.find((item)=>{return item.user==email})){
+            const arr  = blog.likes.filter((item)=>{return item.user != email});
+            // console.log(arr);
+            const newBlog = await Blog.findOneAndUpdate({_id:blogId},{likes:arr});
+            if(newBlog){
+                res.status(201).json(newBlog);
+            }
+            else{
+                res.status(500);
+            }
+        }
+        else{
+            const arr = [...blog.likes];
+            arr.push({
+                user:email,
+            });
+            // console.log(arr);
+            const likedBlog = await Blog.findOneAndUpdate({_id:blogId},{likes:arr});
+            if(likedBlog){
 
-module.exports = {fetchBlog,createBlog,fetchUserBlogs,fetchABlog}
+                res.status(201).json(likedBlog)
+            }
+            else{
+                res.status(500);
+            }
+        }
+    }
+
+})
+module.exports = {fetchBlog,createBlog,fetchUserBlogs,fetchABlog,likeBlog}

@@ -54,7 +54,7 @@ const Explore = () => {
   return (
     <div>
         <div className='navbar'>
-            <p className='brand'>
+            <p className='brand' onClick={()=>{history.push('/')}}>
                 Blog
             </p>
             <div className='links'>

@@ -16,16 +16,22 @@ const ShowBlogs = ({blogs,setViewBlog}) => {
                         <div className='img'>
                             <img src={item.img} className='cover-img'></img>
                         </div>
-                        <div className='tags'>
-                            {
-                                item.tags.map((tg,idx)=>{
-                                    return(
-                                        <span key={idx} className='tag'>
-                                            {tg.tagName}
-                                        </span>
-                                    )
-                                })
-                            }
+                        <div className='header'>
+                            <div className='tags'>
+                                {
+                                    item.tags.map((tg,idx)=>{
+                                        return(
+                                            <span key={idx} className='tag'>
+                                                {tg.tagName}
+                                            </span>
+                                        )
+                                    })
+                                }
+                            </div>
+                            <div className='likes'>
+                               <i class='fas fa-thumbs-up like-icon'></i>
+                               {item.likes.length} 
+                            </div>
                         </div>
                         <div className='blog-main'>
                             <div className='blog-heading'>
