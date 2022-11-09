@@ -10,6 +10,8 @@ const Content = () => {
     }
     const [blog, setBlog] = useState({});
     const [likeColor, setLikeColor] = useState('#ffffff');
+    const [comments, setComments] = useState([]);
+    const [message, setMessage] = useState();
     const {id} = useParams();
     const user = JSON.parse(localStorage.getItem('user'));
     useEffect(() => {
@@ -29,7 +31,15 @@ const Content = () => {
                         setLikeColor('cyan');
                     }
                 } 
-
+                var {data} = await axios.post(
+                    '/comment/fetch',
+                    JSON.stringify({ blogId:id.substring(1) }),
+                    {
+                        headers: { "Content-Type": "application/json" },
+                        withCredentials: true,
+                    }
+                );
+                setComments(data);
             }
             catch(error){
                 console.log(error);
@@ -72,6 +82,22 @@ const Content = () => {
         }
     }
 
+    const commentHandler = async ()=>{
+        try{
+            const {data} = await axios.post(
+                    '/comment/add',
+                    JSON.stringify({ blogId:id.substring(1),message,sendBy:user.email }),
+                    {
+                        headers: { "Content-Type": "application/json" },
+                        withCredentials: true,
+                    }
+                );
+            setComments(data);
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
 
   return (
     <div className='blog-viewer'>
@@ -99,6 +125,41 @@ const Content = () => {
         </div>
         <div className='viewer-content'>
             {blog.content}
+        </div>
+        <div className='comments-section'>
+            <div className='comment-heading'>
+                Comments
+            </div>
+            <div className='send-comments'>
+                <div className='name'>
+                    {user.email}
+                </div>
+                <div className='input-section'>
+                    <input className='comment-input' placeholder='Add Comments...' onChange={(e)=>{setMessage(e.target.value)}}></input>
+                    <div className='btn-comment'>
+                        <button type='submit' className='submit-btn1' onClick={commentHandler}> 
+                            Add
+                        </button>   
+                    </div>
+                </div>
+            </div>
+            <div className='show-comments'>
+                {
+                    (comments.length==0)?'No Comments':
+                    comments.map((item,idx)=>{
+                        return (
+                            <div className='comment'>
+                                <div className='user-id'>
+                                    {item.sendBy}:
+                                </div>
+                                <div className='message'>
+                                    {item.message}
+                                </div>
+                            </div>
+                        )
+                    })
+                }
+            </div>
         </div>
     </div>
   )

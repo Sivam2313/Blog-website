@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const connectDB = require('../backend/config/db');
 const userRoutes = require('./routes/userRoutes');
 const blogRoutes = require('./routes/blogRoutes');
+const commentRoutes = require('./routes/commentRoutes');
 
 dotenv.config()
 const app = express()
@@ -12,6 +13,7 @@ connectDB();
 app.use(express.json())
 app.use('/blogs',blogRoutes)
 app.use('/user',userRoutes)
+app.use('/comment',commentRoutes)
 app.get('/',(req,res)=>{
     res.send('ok');
 })
