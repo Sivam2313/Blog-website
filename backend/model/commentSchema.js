@@ -17,7 +17,10 @@ const commentSchema = mongoose.Schema({
     reply:[{
         message:{
             type:String
-        }
+        },
+        sendBy:{
+            type:String
+        },
     }]
 },{
     timestamp:true,

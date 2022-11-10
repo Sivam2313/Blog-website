@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Editor } from "@tinymce/tinymce-react";
 import './style/create.css';
 import axios from 'axios';
+import {motion} from 'framer-motion';
 import { useHistory } from 'react-router-dom';
 const Create = () => {
     const [heading, setHeading] = useState("");
@@ -81,7 +82,7 @@ const Create = () => {
         }
     }
   return (
-    <div>
+    <div >
         <div className='navbar'>
             <p className='brand' onClick={()=>{history.push('/')}}>
                 Blog
@@ -102,7 +103,7 @@ const Create = () => {
                 </div>
             </div>
         </div>
-        <div className='create-content'>
+        <motion.div  layout initial={{opacity:0}} animate={{opacity:1}} className='create-content'>
             <div className='title'>
                 <input type='text' placeholder='Title of The Blog...' onChange={(e)=>{setHeading(e.target.value)}}></input>
             </div>
@@ -118,7 +119,7 @@ const Create = () => {
                     Submit
                 </button>
             </div>
-        </div>
+        </motion.div>
     </div>
   )
 }

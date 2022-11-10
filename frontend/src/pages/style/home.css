@@ -77,6 +77,12 @@
     border-radius: 5px;
     margin-bottom: 2vh;
     min-width: 300px;
+    transition: all 200ms;
+    cursor: pointer;
+}
+.blog-content:hover{
+    scale: 1.2;
+    box-shadow: 5px 5px 50px #453F39;
 }
 .img{
     width:100%;

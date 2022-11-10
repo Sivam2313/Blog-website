@@ -1,5 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom';
+import {motion} from 'framer-motion';
 
 const ShowBlogs = ({blogs,setViewBlog}) => {
     const history = useHistory();
@@ -8,7 +9,7 @@ const ShowBlogs = ({blogs,setViewBlog}) => {
         history.push(path);
     }
   return (
-    <div className='content'>
+    <motion.div layout initial={{opacity:0}} animate={{opacity:1}} className='content'>
         {
             blogs.map((item,idx)=>{
                 return(
@@ -48,7 +49,7 @@ const ShowBlogs = ({blogs,setViewBlog}) => {
                 )
             })
         }
-    </div>
+    </motion.div>
   )
 }
 

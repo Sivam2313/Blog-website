@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './style/content.css';
-import imgg from '../assets/scblog.png';
 import { useHistory, useParams } from 'react-router-dom';
+import {motion} from 'framer-motion';
 import axios from 'axios';
 const Content = () => {
     const history = useHistory();
@@ -12,6 +12,8 @@ const Content = () => {
     const [likeColor, setLikeColor] = useState('#ffffff');
     const [comments, setComments] = useState([]);
     const [message, setMessage] = useState();
+    const [show, setShow] = useState(-1);
+    const [reply, setReply] = useState();
     const {id} = useParams();
     const user = JSON.parse(localStorage.getItem('user'));
     useEffect(() => {
@@ -99,8 +101,38 @@ const Content = () => {
         }
     }
 
+    function showHandler(idx){
+        if(idx==show){
+            setShow(-1);
+        }
+        else{
+            setShow(idx);
+        }
+    }
+
+    async function replyHandler(idx){
+        try{
+            const {data} = await axios.post(
+                    '/comment/reply',
+                    JSON.stringify({ blogId:id.substring(1),message:reply,sendBy:user.email,id:comments[idx]._id }),
+                    {
+                        headers: { "Content-Type": "application/json" },
+                        withCredentials: true,
+                    }
+                );
+
+            setComments(data);
+            setShow(-1);
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
   return (
-    <div className='blog-viewer'>
+    <motion.div  animate={{opacity:1}} initial={{opacity:0}} className='blog-viewer' style={{
+        display:(id[0]===':')?'flex':'none'
+    }}>
         <div className='backbtn btn' onClick={backHandler}>
             <i class='fas fa-arrow-right'></i>
         </div>
@@ -148,20 +180,53 @@ const Content = () => {
                     (comments.length==0)?'No Comments':
                     comments.map((item,idx)=>{
                         return (
-                            <div className='comment'>
-                                <div className='user-id'>
-                                    {item.sendBy}:
+                            <motion.div key={idx} initial={{scale:0}} animate={{scale:1}} className='comment1'>
+                                <div className='comment'>
+                                    <div className='user-id'>
+                                        {item.sendBy}:
+                                    </div>
+                                    <div className='message'>
+                                        {item.message}
+                                    </div>
+                                    <div className='reply'>
+                                        <button className='reply-btn' onClick={()=>{showHandler(idx)}}>
+                                            <i class='fas fa-reply icon'></i>Reply
+                                        </button>
+                                    </div>
                                 </div>
-                                <div className='message'>
-                                    {item.message}
+                                <div className='reply-control' style={{
+                                    display:(show==idx)?'block':'none'
+                                }}>
+                                    <input className='reply-input' type='text' onChange={(e)=>{setReply(e.target.value)}}></input>
+                                    <div className='btn-comment1'>
+                                        <button type='submit' className='submit-btn1' onClick={()=>replyHandler(idx)}>
+                                            Send
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                                <div className='reply-section'>
+                                    {
+                                        item.reply.map((item1,i)=>{
+                                            return(
+                                                <div className='reply-box'>
+                                                    <div className='reply-header'>
+                                                        {item1.sendBy}:
+                                                    </div>
+                                                    <div className='reply-message'>
+                                                        {item1.message}
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </motion.div>
                         )
                     })
                 }
             </div>
         </div>
-    </div>
+    </motion.div>
   )
 }
 

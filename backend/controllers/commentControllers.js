@@ -36,5 +36,28 @@ const fetchComment = asyncHandler(async(req,res)=>{
     }
 })
 
+const addReply = asyncHandler(async(req,res)=>{
+    const {blogId,id,message,sendBy} = req.body;
+    if(!id){
+        req.status(404)
+    }
+    const comment = await Comment.findOne({_id:id})
+    if(comment){
+        var arr = [...comment.reply];
+        arr.push({
+            message:message,
+            sendBy:sendBy,
+        });
+        const newComment = await Comment.findOneAndUpdate({_id:id},{reply:arr});
+        if(newComment){
+            const allComments = await Comment.find({blog:blogId})
+            if(allComments){
+                res.status(201).json(allComments.reverse());
+            }
+        }
+    }
+    res.status(500);
+})
 
-module.exports = {addComment,fetchComment}
+
+module.exports = {addComment,fetchComment,addReply}
