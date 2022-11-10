@@ -71,6 +71,9 @@ const Explore = () => {
                 </div>
             </div>
         </div>
+        <button className='create-btn' onClick={()=>{history.push('/create')}}>
+            <i class='fas fa-plus'></i>
+        </button>
         <div className='main-content'>
             <ShowBlogs blogs={blogs} setViewBlog={setViewBlog} user={user}/>
         </div>

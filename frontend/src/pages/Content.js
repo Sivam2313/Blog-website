@@ -95,6 +95,7 @@ const Content = () => {
                     }
                 );
             setComments(data);
+            setMessage("");
         }
         catch(error){
             console.log(error);
@@ -167,7 +168,7 @@ const Content = () => {
                     {user.email}
                 </div>
                 <div className='input-section'>
-                    <input className='comment-input' placeholder='Add Comments...' onChange={(e)=>{setMessage(e.target.value)}}></input>
+                    <input className='comment-input' placeholder='Add Comments...' value={message} onChange={(e)=>{setMessage(e.target.value)}}></input>
                     <div className='btn-comment'>
                         <button type='submit' className='submit-btn1' onClick={commentHandler}> 
                             Add

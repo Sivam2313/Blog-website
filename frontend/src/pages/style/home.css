@@ -81,7 +81,7 @@
     cursor: pointer;
 }
 .blog-content:hover{
-    scale: 1.2;
+    scale: 1.08;
     box-shadow: 5px 5px 50px #453F39;
 }
 .img{
@@ -163,4 +163,22 @@
     width:100%;
     color:#6e5c5c;
     margin-right: 2vw;
+}
+.create-btn{
+    position: absolute;
+    bottom: 10vh;
+    right: 5vw;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3vmin;
+    padding: 3vmin;
+    color: #ffffff;
+    background-color: #af3520;
+    border: none;
+    transition: all 200ms;
+}
+.create-btn:hover{
+    background-color: #fd4d2e;
 }
