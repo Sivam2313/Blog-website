@@ -86,6 +86,9 @@ const Content = () => {
 
     const commentHandler = async ()=>{
         try{
+            if(JSON.parse(localStorage.getItem("isAuth"))==false){
+                history.push('/login')
+            }
             const {data} = await axios.post(
                     '/comment/add',
                     JSON.stringify({ blogId:id.substring(1),message,sendBy:user.email }),

@@ -20,9 +20,9 @@ app.use('/comment',commentRoutes)
 const __dirname1 = path.resolve();
 
 if(process.env.Node_Env=='production'){
-    app.use(express.static(path.join(__dirname1,'../frontend/build')));
+    app.use(express.static(path.join(__dirname1,'./frontend/build')));
     app.get('*',(req,res)=>{
-        res.sendFile(path.resolve(__dirname1,"../frontend/build/index.html"))
+        res.sendFile(path.resolve(__dirname1,"./frontend/build/index.html"))
     })
 }
 else{

@@ -9,6 +9,9 @@ const Explore = () => {
     const [user, setUser] = useState(false);
     const history = useHistory();
     useEffect(() => {
+        if(JSON.parse(localStorage.getItem('isAuth'))==false){
+            history.push('/login')
+        }
         async function fetch(){
             const user = JSON.parse(localStorage.getItem('user'))
             try{

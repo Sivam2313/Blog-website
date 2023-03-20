@@ -15,7 +15,7 @@ const Create = () => {
 
         }
         else{
-            history.push('/');
+            history.push('/login');
         }
     }, [])
 

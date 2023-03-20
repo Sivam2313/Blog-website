@@ -34,7 +34,9 @@ const Login = () => {
                     withCredentials: true,
                 }
             );
-            
+            if(data.email == 'error'){
+                return;
+            }
             // const {data} = await axios.post('/user/login',JSON.stringify({email,password}),config);
             localStorage.setItem('isAuth',true);
             localStorage.setItem('user',JSON.stringify(data));
@@ -45,7 +47,7 @@ const Login = () => {
         }
     }
     const onSuccess = async (res) => {
-        
+        console.log(res.wt);
         setEmail(res.wt.cu);
         try{
             const {data} = await axios.post(

@@ -11,7 +11,12 @@ const authUser = asyncHandler(async(req,res)=>{
     }
     const user = await User.findOne({email:email})
     if(user){
-        res.status(201).json(user);
+        // console.log(user);
+        if(user.password == password)
+            res.status(201).json(user);
+        else    
+            res.status(400).json({email:'error'})
+        return;
     }
     const google = false;
     const newUser = await User.create({
