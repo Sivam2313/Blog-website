@@ -11,7 +11,7 @@ const Login = () => {
     const [password, setPassword] = useState();
     const [email, setEmail] = useState();
     const [constant, setConstant] = useState();
-    const clientId = '582024406527-hpg0uhvrd0c8jp5nj6rfvl23np1ri0l9.apps.googleusercontent.com'
+    const clientId ="745449942420-hvv2fks9tubfn3m4ub533d1qs3c0cjua.apps.googleusercontent.com";
     const history = useHistory();
     useEffect(() => {
             const initClient = () => {
@@ -34,6 +34,7 @@ const Login = () => {
                     withCredentials: true,
                 }
             );
+            console.log(data);
             if(data.email == 'error'){
                 return;
             }
