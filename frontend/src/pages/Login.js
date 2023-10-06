@@ -48,7 +48,7 @@ const Login = () => {
         }
     }
     const onSuccess = async (res) => {
-        console.log(res.wt);
+        console.log(res);
         setEmail(res.wt.cu);
         try{
             const {data} = await axios.post(
